@@ -1,0 +1,33 @@
+{
+  "author": {
+    "name": "me@asd"
+  },
+  "bin": {
+    "deploy-react": "./bin/deploy-react.js"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "description": "deploy build react folder files",
+  "keywords": [
+    "react",
+    "deploy",
+	"react-deploy",
+	"single-page-deploy"
+  ],
+  "license": "MIT",
+  "main": "./bin/index.js",
+  "name": "deploy-react",
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git.test.test"
+  },
+  "scripts": {
+    "start": "node bin/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.12"
+}
