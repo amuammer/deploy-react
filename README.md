@@ -17,12 +17,20 @@ deploy-react .
 deploy-react -d specificDirectory
 ```
 
-### deploy specific entry name
+### deploy to specific entry name
 ```javascript
-deploy-react -e entryName
+deploy-react -e entryName.html
 ```
 
 ### deploy to specific port 
 ```javascript
 deploy-react -p 8080
+```
+
+### ** hint ,, you can write it in react package script to get auto deploy 
+```javascript
+"scripts": {
+	"postinstall":"npm install -g deploy-react",
+    "start": "deploy-react -d build"
+	}
 ```

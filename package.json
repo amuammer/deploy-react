@@ -1,6 +1,6 @@
 {
   "author": {
-    "name": "me@asd"
+    "name": "adnan-iug"
   },
   "bin": {
     "deploy-react": "./bin/deploy-react.js"
@@ -23,11 +23,13 @@
   "preferGlobal": true,
   "repository": {
     "type": "git",
-    "url": "git.test.test"
+    "url": "https://github.com/amuammer/deploy-react"
+  },"bugs": {
+    "url": "https://github.com/amuammer/deploy-react/issues"
   },
   "scripts": {
     "start": "node bin/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.12"
+  "version": "1.0.15"
 }
