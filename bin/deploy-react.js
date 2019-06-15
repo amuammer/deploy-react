@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /**
 * MIT License
 *
@@ -21,7 +22,6 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 * SOFTWARE.
 */
-#!/usr/bin/env node
 
 const express = require('express');
 const path = require('path');
