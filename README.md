@@ -34,3 +34,7 @@ deploy-react -p 8080
     "start": "deploy-react -d build"
 	}
 ```
+
+## License
+
+  [MIT](LICENSE)
