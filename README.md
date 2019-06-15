@@ -27,7 +27,7 @@ deploy-react -e entryName.html
 deploy-react -p 8080
 ```
 
-### ** hint ,, you can write it in react package script to get auto deploy 
+### ** hint ,, you can write this scripts in package.json of react to get auto deploy 
 ```javascript
 "scripts": {
 	"postinstall":"npm install -g deploy-react",
