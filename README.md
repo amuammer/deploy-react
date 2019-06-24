@@ -1,6 +1,6 @@
 # deploy-react
 
-### install deploy-react
+## install
 ```javascript
 npm install -g deploy-react
 ```
@@ -9,10 +9,10 @@ npm install -g deploy-react
 ```javascript
 cd react/app/build_folder
 
-deploy-react . 
+deploy-react .
 ```
 
-### deploy to specific directory 
+### deploy to specific directory
 ```javascript
 deploy-react -d specificDirectory
 ```
@@ -22,16 +22,20 @@ deploy-react -d specificDirectory
 deploy-react -e entryName.html
 ```
 
-### deploy to specific port 
+### deploy to specific port
 ```javascript
 deploy-react -p 8080
 ```
+### deploy with https
+```javascript
+deploy-react -https .
+```
 
-### ** hint ,, you can write this scripts in package.json of react to get auto deploy 
+### ** hint ,, you can write this scripts in package.json of react to get auto deploy
 ```javascript
 "scripts": {
 	"postinstall":"npm install -g deploy-react",
-    "start": "deploy-react -d build"
+    "start": "deploy-react -https -d build"
 	}
 ```
 

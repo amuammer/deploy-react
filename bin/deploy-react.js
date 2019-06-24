@@ -24,6 +24,7 @@
 */
 
 const express = require('express');
+var secure = require('express-force-https');
 const path = require('path');
 const app = express();
 const fs = require('fs');
@@ -42,6 +43,8 @@ const args = process.argv; //  passed args to cli
 const indexPort = args.indexOf("-p");
 const indexEntryName = args.indexOf("-e");
 const indexSub = args.indexOf("-d");
+const indexHttps = args.indexOf("-https");
+
 
 if(indexPort!=-1){
 	port = args[indexPort+1];
@@ -53,6 +56,9 @@ if(indexEntryName!=-1){
 
 if(indexSub!=-1){
 	sub = args[indexSub+1];
+}
+if(indexHttps!=-1){
+app.use(secure);
 }
 
 if(args.indexOf(".")!=-1 || indexSub ==-1 ){ // if "." node or if there is no dir passed ,, trim current direcroy,, because it duplicated with sub !
@@ -84,7 +90,14 @@ function startServer(){
 		count++; // starts from 1
 		console.log(`trial ${count} port ${port}`);
 app.listen(port,()=>{
+
+		if(indexHttps!=-1){
+		console.log("serve is running at https port:"+port);
+		}else{
 		console.log("serve is running at port:"+port);
+		}
+
+
 }).on("error",(err)=>{
 		console.log("port "+port+" in use");
 		port = Math.floor(Math.random()*6000)+3000; // listen to random port from 3000 to 9000 
