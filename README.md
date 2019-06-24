@@ -35,7 +35,7 @@ deploy-react -https .
 ```javascript
 "scripts": {
 	"postinstall":"npm install -g deploy-react",
-    "start": "deploy-react -https -d build"
+    "start": "deploy-react -d build"
 	}
 ```
 
