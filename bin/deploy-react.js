@@ -3,17 +3,17 @@
 * MIT License
 *
 * Copyright (c) 2019 adnan-iug
-* 
+*
 * Permission is hereby granted, free of charge, to any person obtaining a copy
 * of this software and associated documentation files (the "Software"), to deal
 * in the Software without restriction, including without limitation the rights
 * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 * copies of the Software, and to permit persons to whom the Software is
 * furnished to do so, subject to the following conditions:
-* 
+*
 * The above copyright notice and this permission notice shall be included in all
 * copies or substantial portions of the Software.
-* 
+*
 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,91 +23,95 @@
 * SOFTWARE.
 */
 
-const express = require('express');
-var secure = require('express-force-https');
-const path = require('path');
+const express = require("express");
+const secure = require("express-force-https");
+const path = require("path");
+const fs = require("fs");
+
 const app = express();
-const fs = require('fs');
 
 
-var port = process.env.PORT || 3000 ; // default port
+let port = process.env.PORT || 3000; // default port
 
-var entryName = "index.html"; // default entry name
-var sub ; // default sub directory is assigned at 4th if 
+let entryName = "index.html"; // default entry name
+let sub = ""; // default sub directory is assigned at 4th if
 
 
+let currentDirecotry = process.cwd();
 
-var currentDirecotry = process.cwd();
-
-const args = process.argv; //  passed args to cli 
+const args = process.argv; //  passed args to cli
 const indexPort = args.indexOf("-p");
 const indexEntryName = args.indexOf("-e");
 const indexSub = args.indexOf("-d");
 const indexHttps = args.indexOf("-https");
+const indexProxy = args.indexOf("-proxy");
 
 
-if(indexPort!=-1){
-	port = args[indexPort+1];
+if (indexPort !== -1) {
+  port = args[indexPort + 1];
 }
 
-if(indexEntryName!=-1){
-	entryName = args[indexEntryName+1];
+if (indexEntryName !== -1) {
+  entryName = args[indexEntryName + 1];
 }
 
-if(indexSub!=-1){
-	sub = args[indexSub+1];
-}
-if(indexHttps!=-1){
-app.use(secure);
+if (indexSub !== -1) {
+  sub = args[indexSub + 1];
 }
 
-if(args.indexOf(".")!=-1 || indexSub ==-1 ){ // if "." node or if there is no dir passed ,, trim current direcroy,, because it duplicated with sub !
-	var trimmed = currentDirecotry.split(path.sep);
-	sub = trimmed.pop(); // assigned 
-	currentDirecotry = trimmed.join(path.sep);
+if (indexHttps !== -1) {
+  app.use(secure);
+}
+
+if (indexProxy !== -1) {
+  const proxyDefaultPath = `.${`/${sub}`}/setupProxy.js`;
+  console.log("proxy must be in path:", proxyDefaultPath);
+  const setupProxy = require(proxyDefaultPath);
+  setupProxy(app);
+}
+
+if (args.indexOf(".") !== -1 || indexSub === -1) { // if "." node or if there is no dir passed ,, trim current direcroy,, because it duplicated with sub !
+  const trimmed = currentDirecotry.split(path.sep);
+  sub = trimmed.pop(); // assigned
+  currentDirecotry = trimmed.join(path.sep);
 }
 
 
-const absolutePath= path.join(currentDirecotry, sub, entryName);
-const relativePath = path.join(sub,entryName);
+const absolutePath = path.join(currentDirecotry, sub, entryName);
+const relativePath = path.join(sub, entryName);
+
+let count = 0;
+
+function startServer() {
+  count += 1; // starts from 1
+  console.log(`trial ${count} port ${port}`);
+  app.listen(port, () => {
+    if (indexHttps !== -1) {
+      console.log(`server is running at https port:${port}`);
+    } else {
+      console.log(`server is running at port:${port}`);
+    }
+  }).on("error", (err) => {
+    console.log(err.message);
+    port = Math.floor(Math.random() * 6000) + 3000; // listen to random port from 3000 to 9000
+    if (count !== 100) startServer(); // max trials to run 100
+  });
+}
 
 // check entry file exists !
 
-fs.stat(absolutePath, function(err,stat){
-			
-   if (stat) { // if there is state(properties) for this file ,,,, i use it as indicator to see the file exists or not
-    console.log(relativePath+" exists");
-		startServer();
-   }else{  
-		  console.log(relativePath+" not exists or cant read it");   
-   }
+fs.stat(absolutePath, (err, stat) => {
+  if (stat) { // if there is state(properties) for this file ,,,, i use it as indicator to see the file exists or not
+    console.log(`${relativePath} exists`);
+    startServer();
+  } else {
+    console.log(`${relativePath} not exists or cant read it`);
+  }
 });
 
+app.use(express.static(path.join(currentDirecotry, sub))); // use all the sub folder
 
-var count = 0; 
-
-function startServer(){
-		count++; // starts from 1
-		console.log(`trial ${count} port ${port}`);
-app.listen(port,()=>{
-
-		if(indexHttps!=-1){
-		console.log("serve is running at https port:"+port);
-		}else{
-		console.log("serve is running at port:"+port);
-		}
-
-
-}).on("error",(err)=>{
-		console.log("port "+port+" in use");
-		port = Math.floor(Math.random()*6000)+3000; // listen to random port from 3000 to 9000 
-		if(count!=100) startServer(); // max trials to run 100
-});
-}
-
-
-app.use(express.static(path.join(currentDirecotry, sub))); // use all the sub folder 
-
-app.get('*', function(req, res) {
+app.get("*", (req, res) => {
   res.sendFile(absolutePath);
 });
+
