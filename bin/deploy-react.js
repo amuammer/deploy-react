@@ -67,7 +67,7 @@ if (indexProxy !== -1) {
   const proxyDefaultPath = `.${`/${sub}`}/setupProxy.js`;
   const absoluteProxyDefaultPath = path.join(currentDirecotry, proxyDefaultPath);
   console.log("proxy must be in path:", absoluteProxyDefaultPath);
-  const setupProxy = require(proxyDefaultPath);
+  const setupProxy = require(absoluteProxyDefaultPath);
   setupProxy(app);
 }
 
