@@ -15,6 +15,7 @@ setupProxy.js :point_down: template <br/>
 deploy-react -d build -proxy
 ```
 <hr>
+
 ### deploy current folder
 ```javascript
 cd react/app/build_folder
