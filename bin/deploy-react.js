@@ -64,8 +64,8 @@ if (indexHttps !== -1) {
 }
 
 if (indexProxy !== -1) {
-  const proxyDefaultPath = `.${`/${sub}`}/setupProxy.js`;
-  const absoluteProxyDefaultPath = path.join(currentDirecotry, proxyDefaultPath);
+  // proxy must be in ./src/setupProxy.js
+  const absoluteProxyDefaultPath = path.join(currentDirecotry, "src", "setupProxy.js");
   console.log("proxy must be in path:", absoluteProxyDefaultPath);
   const setupProxy = require(absoluteProxyDefaultPath);
   setupProxy(app);
@@ -115,4 +115,3 @@ app.use(express.static(path.join(currentDirecotry, sub))); // use all the sub fo
 app.get("*", (req, res) => {
   res.sendFile(absolutePath);
 });
-
