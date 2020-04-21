@@ -110,15 +110,6 @@ fs.stat(absolutePath, (err, stat) => {
   }
 });
 
-// special handling for css => in production has problem of mime type
-app.get("/static/css/*", (req, res, next) => {
-  if (req.url.endsWith(".css")) {
-    console.log("endsWith css", req.url);
-    res.setHeader("content-type", "text/css");
-    res.sendFile(path.join(currentDirecotry, sub, req.url));
-  } else next();
-});
-
 // use all the sub folder as static files
 app.use(express.static(path.join(currentDirecotry, sub))); // use all the sub folder
 
