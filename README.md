@@ -7,7 +7,7 @@ npm install -g deploy-react
 <hr>
 
 ### New feature :fire: Proxy :fire:
-> setupProxy.js must be in the same folder of index.js
+> setupProxy.js must be in the src folder ./src/setupProxy.js
 
 setupProxy.js :point_down: template <br/>
 :point_right: <b> http-proxy-middleware </b>  https://github.com/chimurai/http-proxy-middleware
