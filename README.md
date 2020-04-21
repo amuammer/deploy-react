@@ -12,9 +12,9 @@ npm install -g deploy-react
 setupProxy.js :point_down: template <br/>
 :point_right: <b> http-proxy-middleware </b>  https://github.com/chimurai/http-proxy-middleware
 ```javascript
-deploy-react . -proxy
+deploy-react -d build -proxy
 ```
-
+<hr>
 ### deploy current folder
 ```javascript
 cd react/app/build_folder
