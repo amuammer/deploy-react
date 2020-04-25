@@ -8,7 +8,7 @@ npm install -g deploy-react
 
 ### New feature :fire: Proxy :fire:
 
-###### deploy-react with proxy in "production" :
+#### deploy-react with proxy in "production" :
 ![image](image.jpg)
 
 > setupProxy.js must be in the src folder ./src/setupProxy.js
