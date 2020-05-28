@@ -81,11 +81,8 @@ if (args.indexOf(".") !== -1 || indexSub === -1) { // if "." node or if there is
 const absolutePath = path.join(currentDirecotry, sub, entryName);
 const relativePath = path.join(sub, entryName);
 
-let count = 0;
-
 function startServer() {
-  count += 1; // starts from 1
-  console.log(`trial ${count} port ${port}`);
+  console.log(`trying to running on port ${port}`);
   app.listen(port, () => {
     if (indexHttps !== -1) {
       console.log(`server is running at https port:${port}`);
@@ -95,9 +92,8 @@ function startServer() {
       process.exit(0);
     }
   }).on("error", (err) => {
-    console.log(err.message);
-    port = Math.floor(Math.random() * 6000) + 3000; // listen to random port from 3000 to 9000
-    if (count !== 100) startServer(); // max trials to run 100
+    console.error(err.message);
+    process.exit(1);
   });
 }
 
