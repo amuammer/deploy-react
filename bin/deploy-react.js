@@ -89,8 +89,10 @@ function startServer() {
   app.listen(port, () => {
     if (indexHttps !== -1) {
       console.log(`server is running at https port:${port}`);
+      process.exit(0);
     } else {
       console.log(`server is running at port:${port}`);
+      process.exit(0);
     }
   }).on("error", (err) => {
     console.log(err.message);
