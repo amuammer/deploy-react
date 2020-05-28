@@ -106,7 +106,8 @@ fs.stat(absolutePath, (err, stat) => {
     console.log(`${relativePath} exists`);
     startServer();
   } else {
-    console.log(`${relativePath} not exists or cant read it`);
+    console.error(`${relativePath} not exists or cant read it`);
+    process.exit(1);
   }
 });
 
