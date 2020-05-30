@@ -27,6 +27,7 @@ const express = require("express");
 const secure = require("express-force-https");
 const path = require("path");
 const fs = require("fs");
+const https = require("https");
 
 const app = express();
 
@@ -82,19 +83,26 @@ const absolutePath = path.join(currentDirecotry, sub, entryName);
 const relativePath = path.join(sub, entryName);
 
 function startServer() {
-  console.log(`trying to running on port ${port}`);
-  app.listen(port, () => {
-    if (indexHttps !== -1) {
-      console.log(`server is running at https port:${port}`);
-    } else {
-      console.log(`server is running at port:${port}`);
-    }
-  }).on("error", (err) => {
-    console.error(err.message);
-    process.exit(1);
-  });
-}
+    console.log(`trying to running on port ${port}`);
+  if (indexHttps !== -1) {
+    app.listen(port, () => { // http server
+        console.log(`http server is running at port:${port}`);
+    }).on("error", (err) => {
+      console.error(err.message);
+      process.exit(1);
+    });
+  } else { //
+    const privateKey = fs.readFileSync(path.join(currentDirecotry, "sslcert/server.key")).toString();
+    const certificate = fs.readFileSync(path.join(currentDirecotry, "sslcert/server.crt")).toString();
 
+    const credentials = {key: privateKey, cert: certificate};
+
+    const httpsServer = https.createServer(credentials, app);
+      httpsServer.listen(httpsPort, () => {
+        console.log(`https server running on port: ${httpsPort}`);
+      });
+  }
+}
 // check entry file exists !
 
 fs.stat(absolutePath, (err, stat) => {

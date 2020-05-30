@@ -42,11 +42,16 @@ deploy-react -e entryName.html
 deploy-react -p 8080
 ```
 ### deploy with https
+**Note** the next files must be exist in parent dir of the entry file
+<br/>
+- -> build/index.html
+- sslcert/server.key
+- sslcert/server.crt
 ```javascript
 deploy-react -https .
 ```
 
-### ** hint ,, you can write this scripts in package.json of react to get auto deploy
+### **Hint** ,, you can write this scripts in package.json of react to get auto deploy
 ```javascript
 "scripts": {
 	"postinstall":"npm install -g deploy-react",
