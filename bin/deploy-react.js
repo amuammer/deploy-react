@@ -98,8 +98,8 @@ function startServer() {
     const credentials = {key: privateKey, cert: certificate};
 
     const httpsServer = https.createServer(credentials, app);
-      httpsServer.listen(httpsPort, () => {
-        console.log(`https server running on port: ${httpsPort}`);
+      httpsServer.listen(port, () => {
+        console.log(`https server running on port: ${port}`);
       }).on("error", (err) => {
         console.error(err.message);
         process.exit(1);
