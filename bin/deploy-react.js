@@ -46,6 +46,7 @@ const indexEntryName = args.indexOf("-e");
 const indexSub = args.indexOf("-d");
 const indexHttps = args.indexOf("-https");
 const indexProxy = args.indexOf("-proxy");
+const indexForce = args.indexOf("-f");
 
 
 if (indexPort !== -1) {
@@ -60,7 +61,7 @@ if (indexSub !== -1) {
   sub = args[indexSub + 1];
 }
 
-if (indexHttps !== -1) {
+if (indexForce !== -1) {
   app.use(secure);
 }
 
