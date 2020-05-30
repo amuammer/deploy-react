@@ -84,7 +84,7 @@ const relativePath = path.join(sub, entryName);
 
 function startServer() {
     console.log(`trying to running on port ${port}`);
-  if (indexHttps !== -1) {
+  if (indexHttps === -1) {
     app.listen(port, () => { // http server
         console.log(`http server is running at port:${port}`);
     }).on("error", (err) => {
@@ -100,6 +100,9 @@ function startServer() {
     const httpsServer = https.createServer(credentials, app);
       httpsServer.listen(httpsPort, () => {
         console.log(`https server running on port: ${httpsPort}`);
+      }).on("error", (err) => {
+        console.error(err.message);
+        process.exit(1);
       });
   }
 }
