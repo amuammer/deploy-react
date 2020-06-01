@@ -95,8 +95,9 @@ function startServer() {
   } else { //
     const privateKey = fs.readFileSync(path.join(currentDirecotry, "sslcert/server.key")).toString();
     const certificate = fs.readFileSync(path.join(currentDirecotry, "sslcert/server.crt")).toString();
+    const caCertificate = fs.readFileSync(path.join(currentDirecotry, "sslcert/ca.crt")).toString();
 
-    const credentials = {key: privateKey, cert: certificate};
+    const credentials = {key: privateKey, cert: certificate, ca: caCertificate };
 
     const httpsServer = https.createServer(credentials, app);
       httpsServer.listen(port, () => {
