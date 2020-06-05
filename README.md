@@ -47,7 +47,7 @@ deploy-react -p 8080
 - -> build/index.html
 - sslcert/server.key
 - sslcert/server.crt
-- sslcert/ca.crt
+- sslcert/ca.crt // if you don't have create an empty file "touch ca.crt"
 
 ```javascript
 deploy-react -https .

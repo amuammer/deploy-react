@@ -6,7 +6,6 @@
     "deploy-react": "./bin/deploy-react.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-force-https": "^1.0.0",
     "fs": "0.0.1-security",
@@ -34,5 +33,5 @@
     "start": "node bin/deploy-react.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.4.0"
+  "version": "1.4.1"
 }

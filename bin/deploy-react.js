@@ -28,7 +28,6 @@ const secure = require("express-force-https");
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
-var cors = require('cors')
 
 const app = express();
 
@@ -48,8 +47,6 @@ const indexSub = args.indexOf("-d");
 const indexHttps = args.indexOf("-https");
 const indexProxy = args.indexOf("-proxy");
 const indexForce = args.indexOf("-f");
-const indexCors = args.indexOf("-cors");
-
 
 if (indexPort !== -1) {
   port = args[indexPort + 1];
@@ -65,10 +62,6 @@ if (indexSub !== -1) {
 
 if (indexForce !== -1) {
   app.use(secure);
-}
-
-if (indexCors !== -1) {
-  app.use(cors());
 }
 
 if (indexProxy !== -1) {
