@@ -6,6 +6,24 @@ npm install -g deploy-react
 ```
 <hr>
 
+### New feature :fire: pm2 :fire:
+
+#### deploy-react with pm2:
+![image](image2.png)
+
+**Now** you can deploy your front end server with pm2 clustering and enjoy with all its amazing features
+
+```bash
+pm2 start -f --name front deploy-react -- -https -d dist -p 443
+```
+**pass arguments to pm2 process**
+```bash
+pm2 start deploy-react -- arg1 arg2 arg3
+```
+## more about pm2 :point_right: [click](https://pm2.keymetrics.io/) :point_left:
+
+<hr>
+
 ### New feature :fire: Proxy :fire:
 
 #### deploy-react with proxy in "production" :

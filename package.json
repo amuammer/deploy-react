@@ -33,5 +33,5 @@
     "start": "node bin/deploy-react.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.4.1"
+  "version": "2.0.0"
 }
