@@ -47,6 +47,7 @@ const indexSub = args.indexOf("-d");
 const indexHttps = args.indexOf("-https");
 const indexProxy = args.indexOf("-proxy");
 const indexForce = args.indexOf("-f");
+const indexHelmet = args.indexOf("-helmet");
 
 if (indexPort !== -1) {
   port = args[indexPort + 1];
@@ -63,6 +64,16 @@ if (indexSub !== -1) {
 if (indexForce !== -1) {
   app.use(secure);
 }
+
+if (indexHelmet !== -1) {
+  console.log("enable helmet");
+  const helmet = require('helmet')
+  app.use(helmet.hidePoweredBy());
+  app.use(helmet.noSniff());
+  app.use(helmet.xssFilter());
+  app.use(helmet.frameguard({ action: 'sameorigin' }));
+}
+
 
 if (indexProxy !== -1) {
   // proxy must be in ./src/setupProxy.js
