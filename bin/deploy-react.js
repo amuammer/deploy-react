@@ -76,6 +76,7 @@ if (indexHelmet !== -1) {
 }
 
 if (indexCSP !== -1) {
+  console.log("enable csp");
   const indexCSPScript = args.indexOf("-csp-script");
   const indexCSPStyle = args.indexOf("-csp-style");
   const indexCSPFont = args.indexOf("-csp-font");
