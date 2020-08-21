@@ -67,14 +67,6 @@ if (indexForce !== -1) {
   app.use(secure);
 }
 
-if (indexHelmet !== -1) {
-  console.log("enable helmet");
-  app.use(helmet.hidePoweredBy());
-  app.use(helmet.noSniff());
-  app.use(helmet.xssFilter());
-  app.use(helmet.frameguard({ action: 'sameorigin' }));
-}
-
 if (indexCSP !== -1) {
   console.log("enable csp");
   const indexCSPScript = args.indexOf("-csp-script");
@@ -82,9 +74,13 @@ if (indexCSP !== -1) {
   const indexCSPFont = args.indexOf("-csp-font");
   const indexCSPUIR = args.indexOf("-csp-uir");
   const indexCSPBMC = args.indexOf("-csp-bmc");
-  const scriptSrc = args[indexCSPScript + 1].split(",");
-  const styleSrc = args[indexCSPStyle + 1].split(",");
-  const fontSrc = args[indexCSPFont + 1].split(",");
+  const scriptSrc = indexCSPScript === -1 ? [] : args[indexCSPScript + 1].split(",");
+  const styleSrc = indexCSPStyle === -1 ? [] : args[indexCSPStyle + 1].split(",");
+  const fontSrc = indexCSPFont === -1 ? [] : args[indexCSPFont + 1].split(",");
+
+  console.log("scriptSrc", scriptSrc);
+  console.log("styleSrc", styleSrc);
+  console.log("fontSrc", fontSrc);
 
   app.use(helmet.contentSecurityPolicy({
     directives: {
@@ -96,7 +92,14 @@ if (indexCSP !== -1) {
      blockAllMixedContent: indexCSPBMC !== -1,
    }
   }));
+}
 
+if (indexHelmet !== -1) {
+  console.log("enable helmet");
+  app.use(helmet.hidePoweredBy());
+  app.use(helmet.noSniff());
+  app.use(helmet.xssFilter());
+  app.use(helmet.frameguard({ action: 'sameorigin' }));
 }
 
 
