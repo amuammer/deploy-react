@@ -28,6 +28,7 @@ const secure = require("express-force-https");
 const path = require("path");
 const fs = require("fs");
 const https = require("https");
+const helmet = require('helmet')
 
 const app = express();
 
@@ -48,6 +49,7 @@ const indexHttps = args.indexOf("-https");
 const indexProxy = args.indexOf("-proxy");
 const indexForce = args.indexOf("-f");
 const indexHelmet = args.indexOf("-helmet");
+const indexCSP = args.indexOf("-csp");
 
 if (indexPort !== -1) {
   port = args[indexPort + 1];
@@ -67,11 +69,33 @@ if (indexForce !== -1) {
 
 if (indexHelmet !== -1) {
   console.log("enable helmet");
-  const helmet = require('helmet')
   app.use(helmet.hidePoweredBy());
   app.use(helmet.noSniff());
   app.use(helmet.xssFilter());
   app.use(helmet.frameguard({ action: 'sameorigin' }));
+}
+
+if (indexCSP !== -1) {
+  const indexCSPScript = args.indexOf("-csp-script");
+  const indexCSPStyle = args.indexOf("-csp-style");
+  const indexCSPFont = args.indexOf("-csp-font");
+  const indexCSPUIR = args.indexOf("-csp-uir");
+  const indexCSPBMC = args.indexOf("-csp-bmc");
+  const scriptSrc = args[indexCSPScript + 1].split(",");
+  const styleSrc = args[indexCSPStyle + 1].split(",");
+  const fontSrc = args[indexCSPFont + 1].split(",");
+
+  app.use(helmet.contentSecurityPolicy({
+    directives: {
+     defaultSrc: ['* data: blob:', "'self'"],
+     styleSrc: ["'self'","'unsafe-inline'" , ...styleSrc],
+     scriptSrc: ["'self'","'unsafe-inline'", "'unsafe-eval'", ...scriptSrc],
+     fontSrc:["'self'", ...fontSrc],
+     upgradeInsecureRequests: indexCSPUIR !== -1,
+     blockAllMixedContent: indexCSPBMC !== -1,
+   }
+  }));
+
 }
 
 
